@@ -39,7 +39,7 @@
 
     $.ajax(url, { type: options.method, data: options.data })
       .always(function() {
-        $container.removeClass('replace-active').trigger('replace:always');
+        $container.removeClass('replace-active');
       })
       .done(function(data) {
         if (options.success) {
@@ -56,7 +56,6 @@
     var state = event.originalEvent.state;
     if (state && state.selector) {
       $(state.data).replaceAll(state.selector)
-                   .trigger('replace:always')
                    .trigger('replace:done');
     }
   });
