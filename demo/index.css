@@ -1,0 +1,7 @@
+body {
+  overflow-y: scroll;
+}
+
+.replace-active {
+  opacity: 0.5;
+}

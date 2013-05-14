@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Replace.js demo</title>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Replace.js demo</h1>
+    <p class="lead">Implementations of common UI patterns using Replace.js.</p>
+
+    <h2>Paginated list</h2>
+    <p>For displaying a large, ordered collection when the user is probably most interested in the first few.</p>
+    <div class="well well-small">Red</div>
+    <div class="well well-small">Green</div>
+    <a href="page2.html" data-replace>See more</a>
+
+    <h2>Posting</h2>
+    <p>For adding another item to a list.</p>
+    <div class="well well-small">Red</div>
+    <div class="well well-small">Green</div>
+    <form action="post.html" class="well well-small" data-replace>
+      <input value="Blue">
+      <button class="btn">Add</button>
+    </form>
+
+    <h2>Tabs</h2>
+    <p>For content that should be split into bite-size chunks.</p>
+    <div class="replace-onload" data-href="slide1.html"></div>
+
+    <h2>Media player</h2>
+    <p>To show a preview image that becomes a video player when clicked.</p>
+    <a href="video.html" data-replace>
+      <img src="http://img.youtube.com/vi/sWEfszb9h8Q/mqdefault.jpg">
+    </a>
+
+    <h2>Dismissable</h2>
+    <p>To hide something.</p>
+    <div class="alert alert-info">
+      <b>Hey!</b> You can dismiss this alert by clicking the X.
+      <a class="close" href="dismiss.html" data-replace=".alert">&times;</a>
+    </div>
+
+    <h2>View/Edit</h2>
+    <p>For allowing the user to edit a record in place.</p>
+    <div class="replace-onload" data-href="ve-view.html"></div>
+
+    <h2>Toolbar</h2>
+    <p>A collection of related status indicators and buttons to change those states.</p>
+    <div class="replace-onload" data-href="toolbar.html"></div>
+  </div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+  <script src="../replace.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
