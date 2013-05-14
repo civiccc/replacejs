@@ -119,4 +119,10 @@
       .val($button.val())
       .appendTo($button.closest('form'));
   });
+
+  if (window.releaseClicks) {
+    $.each(releaseClicks(), function(_, event) {
+      $(event.target).trigger(event.type);
+    })
+  }
 })(jQuery);
