@@ -52,7 +52,7 @@
       });
   };
 
-  $(window).bind('popstate', function(event) {
+  $(window).on('popstate', function(event) {
     var state = event.originalEvent.state;
     if (state && state.selector) {
       $(state.data).replaceAll(state.selector)
@@ -122,6 +122,6 @@
   if (window.releaseClicks) {
     $.each(releaseClicks(), function(_, event) {
       $(event.target).trigger(event.type);
-    })
+    });
   }
 })(jQuery);
