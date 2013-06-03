@@ -60,7 +60,7 @@ to return a partial or a full page.
 The `data-replace` attribute also works on forms, catching the `submit` event.
 
 ```html
-<form href="/foo" data-replace>
+<form action="/foo" data-replace>
   <input type="submit">
 </form>
 ```
