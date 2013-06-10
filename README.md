@@ -38,12 +38,20 @@ header. Link to `replace.js` at the bottom of the document body, below jQuery.
 
 ## Usage
 
-You declare a link to be "AJAX-ified" by giving it a `data-replace` attribute.
-When the link is clicked, it will be replaced by the result of an AJAX request
-to its `href`.
+You AJAX-ify a link by giving it a `data-replace` attribute containing a jQuery
+selector. When the link is clicked, its closest ancestor matching the selector
+will be replaced by the result of an AJAX request to the link's `href`.
 
 ```html
-<a href="/foo" data-replace>Foo</a>
+<div class="container">
+  <a href="/foo" data-replace=".container">Foo</a>
+</div>
+```
+
+The link can replace itself. A convenient selector for doing so is '*'.
+
+```html
+<a href="/foo" data-replace="*">Foo</a>
 ```
 
 It is up to you to ensure that the server returns an appropriate partial in
@@ -54,24 +62,60 @@ API.  The server can check the `X-Requested-With` header to determine whether
 to return a partial or a full page.
 
 ```html
-<a href="/foo" data-replace data-pushstate>Foo</a>
+<a href="/foo" data-replace="*" data-pushstate>Foo</a>
 ```
 
 The `data-replace` attribute also works on forms, catching the `submit` event.
 
 ```html
-<form action="/foo" data-replace>
+<form action="/foo" data-replace="*">
   <input type="submit">
 </form>
 ```
 
-You can give `data-replace` a value, and the element's closest matching
-ancestor will be replaced instead of the element itself.
+## Styling
+
+While the AJAX operation is in progress, the matched container will have the
+CSS class `.replace-active`. Clicks/submits within that container will be
+ignored until the current operation completes, so you don't have to worry
+about forms being submitted twice when a user double-clicks the button.
+
+The `.replace-active` class can be useful for styling the container in order
+to give the user feedback about when the operation begins and ends. For
+instance, the following CSS style will cause elements to be faded when they
+are in the process of being replaced:
+
+```css
+.replace-active {
+  opacity: 0.5;
+}
+```
+
+## Events
+
+When a replace operation occurs, a `replace:done` event is triggered on each
+top-level element of the inserted partial. For example, given the following
+listener:
+
+```javascript
+$(document).on('replace:done', 'p', function() {
+  console.log(this.innerHTML);
+});
+```
+
+If the server returns the following partial:
 
 ```html
-<div class="container">
-  <a href="/foo" data-replace=".container">Foo</a>
-</div>
+<p>First.</p>
+<p><em>Second.</em></p>
+<div><p>Third.</p></div>
+```
+
+The console will print:
+
+```
+First.
+<em>Second.</em>
 ```
 
 ## License
