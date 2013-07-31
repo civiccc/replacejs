@@ -152,4 +152,24 @@
       $(event.target).trigger(event.type);
     });
   }
+
+  // Allows sections of the page to be lazily loaded just before they come into
+  // view. Implementation is simple: just add a 'lazy-url' data attribute like so
+  //
+  //   <div data-lazy-url="http://causes.com/expensive/content"></div>
+  //
+  // The rest will be handled by this code.
+  //
+  // Note that we support adding yet-more lazy content onto the page after page
+  // initialization, but only when using Replace.js.
+  $(document).initializeEach('[data-lazy-url]', function() {
+    var $this = $(this);
+    $this.waypoint({
+      offset: '110%',
+      triggerOnce: true,
+      handler: function() {
+        $this.ajaxReplace($this.data('lazy-url'));
+      }
+    });
+  });
 })(jQuery);
