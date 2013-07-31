@@ -57,12 +57,12 @@
   };
 
   // Replace an element with the result of an AJAX request.
-  $.fn.ajaxReplace = function(url, options) {
-    if (this.closest('.replace-active').length) {
+  function ajaxReplace($elem, url, options) {
+    if ($elem.closest('.replace-active').length) {
       return;
     }
     options = options || {};
-    var $container = this.closest(options.selector || '*');
+    var $container = $elem.closest(options.selector || '*');
     $container.addClass('replace-active').trigger('replace:start');
 
     $.ajax(url, { type: options.method, data: options.data })
@@ -78,7 +78,7 @@
       .fail(function() {
         $container.trigger('replace:fail');
       });
-  };
+  }
 
   $(window).on('popstate', function(event) {
     var state = event.originalEvent.state;
@@ -105,7 +105,7 @@
 
     event.preventDefault();
 
-    $link.ajaxReplace($link.attr('href'), {
+    ajaxReplace($link, $link.attr('href'), {
       selector: $link.data('replace'),
       success: function($container, data) {
         if ($link.data('pushstate')) {
@@ -126,7 +126,7 @@
     event.preventDefault();
     var $form = $(this);
 
-    $form.ajaxReplace($form.attr('action'), {
+    ajaxReplace($form, $form.attr('action'), {
       selector: $form.data('replace'),
       method: $form.attr('method'),
       data: $form.serialize()
@@ -172,11 +172,11 @@
         offset: '110%',
         triggerOnce: true,
         handler: function() {
-          $this.ajaxReplace($this.data('lazy-url'));
+          ajaxReplace($this, $this.data('lazy-url'));
         }
       });
     } else {
-      $this.ajaxReplace($this.data('lazy-url'));
+      ajaxReplace($this, $this.data('lazy-url'));
     }
   });
 })(jQuery);
