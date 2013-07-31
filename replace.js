@@ -28,6 +28,34 @@
 //   This obviates the need to prevent double submissions of forms.
 
 (function($, undefined) {
+  // Apply callback to every descendent matching selector that exists at page
+  // load or that is added later. This frees you as the developer from having to
+  // find every place in the codebase where a given widget might be added to the
+  // page and attaching its initialization logic there.
+  //
+  // Example:
+  //   $(document).initializeEach('[data-background-url]', function() {
+  //     $(this).waypoint(function() {
+  //       $(this).css('backgroundUrl', $(this).data('backgroundUrl'));
+  //     }, { offset: '100%', triggerOnce: true });
+  //   });
+  //
+  // It is also possible to nest these calls.
+  //
+  //   $(document).initializeEach('.discussion-board', function() {
+  //     $(this).initializeEach('.discussion-post', function() {
+  //       // ...
+  //     });
+  //   });
+  //
+  $.fn.initializeEach = function(selector, callback) {
+    this
+      .on('replace:done', function(event) {
+        $(event.target).find(selector).addBack(selector).each(callback);
+      })
+      .find(selector).each(callback);
+  };
+
   // Replace an element with the result of an AJAX request.
   $.fn.ajaxReplace = function(url, options) {
     if (this.closest('.replace-active').length) {
