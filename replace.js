@@ -158,18 +158,25 @@
   //
   //   <div data-lazy-url="http://causes.com/expensive/content"></div>
   //
-  // The rest will be handled by this code.
+  // The rest will be handled by this code, in conjunction with the jQuery
+  // waypoints plug-in (http://imakewebthings.com/jquery-waypoints/); if the
+  // plug-in is not available, we degrade gracefully and revert to eager
+  // loading.
   //
   // Note that we support adding yet-more lazy content onto the page after page
   // initialization, but only when using Replace.js.
   $(document).initializeEach('[data-lazy-url]', function() {
     var $this = $(this);
-    $this.waypoint({
-      offset: '110%',
-      triggerOnce: true,
-      handler: function() {
-        $this.ajaxReplace($this.data('lazy-url'));
-      }
-    });
+    if (typeof $.fn.waypoint === 'function') {
+      $this.waypoint({
+        offset: '110%',
+        triggerOnce: true,
+        handler: function() {
+          $this.ajaxReplace($this.data('lazy-url'));
+        }
+      });
+    } else {
+      $this.ajaxReplace($this.data('lazy-url'));
+    }
   });
 })(jQuery);
