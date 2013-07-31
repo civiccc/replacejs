@@ -169,7 +169,7 @@
     var $this = $(this);
     if (typeof $.fn.waypoint === 'function') {
       $this.waypoint({
-        offset: '110%',
+        offset: '120%',
         triggerOnce: true,
         handler: function() {
           ajaxReplace($this, $this.data('lazy-url'));
