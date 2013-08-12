@@ -163,18 +163,37 @@
   // plug-in is not available, we degrade gracefully and revert to eager
   // loading.
   //
+  // To have the lazy url trigger based on horizontal offset, set the
+  // 'lazy-url-horizontal' data attribute to 'true'.
+  //
+  // To set a custom context set the 'lazy-url-context' data attribute to a CSS
+  // selector. A custom context is an element which acts as the relative point
+  // from which the offset is considered. This defaults to the window.
+  //
   // Note that we support adding yet-more lazy content onto the page after page
   // initialization, but only when using Replace.js.
   $(document).initializeEach('[data-lazy-url]', function() {
     var $this = $(this);
     if (typeof $.fn.waypoint === 'function') {
-      $this.waypoint({
+      var waypointOptions = {
         offset: '120%',
         triggerOnce: true,
         handler: function() {
           ajaxReplace($this, $this.data('lazy-url'));
         }
-      });
+      };
+
+      if ($this.data('lazyUrlHorizontal')) {
+        waypointOptions.horizontal = true;
+        waypointOptions.direction = 'right';
+      }
+
+      var dataContext = $this.data('lazyUrlContext');
+      if (dataContext) {
+        waypointOptions.context = dataContext;
+      }
+
+      $this.waypoint(waypointOptions);
     } else {
       ajaxReplace($this, $this.data('lazy-url'));
     }
