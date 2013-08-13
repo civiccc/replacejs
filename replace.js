@@ -164,9 +164,9 @@
   // loading.
   //
   // To have the lazy url trigger based on horizontal offset, set the
-  // 'lazy-url-horizontal' data attribute to 'true'.
+  // 'lazy-horizontal' data attribute to 'true'.
   //
-  // To set a custom context set the 'lazy-url-context' data attribute to a CSS
+  // To set a custom context set the 'lazy-context' data attribute to a CSS
   // selector. A custom context is an element which acts as the relative point
   // from which the offset is considered. This defaults to the window.
   //
@@ -183,12 +183,12 @@
         }
       };
 
-      if ($this.data('lazyUrlHorizontal')) {
+      if ($this.data('lazyHorizontal')) {
         waypointOptions.horizontal = true;
         waypointOptions.direction = 'right';
       }
 
-      var dataContext = $this.data('lazyUrlContext');
+      var dataContext = $this.data('lazyContext');
       if (dataContext) {
         waypointOptions.context = dataContext;
       }
