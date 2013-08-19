@@ -1,6 +1,6 @@
 {
   "name": "replacejs",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "main": [
     "replace.js",
     "primer.js",
