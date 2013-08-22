@@ -170,6 +170,9 @@
   // selector. A custom context is an element which acts as the relative point
   // from which the offset is considered. This defaults to the window.
   //
+  // To specify a custom waypoint offset set the 'lazy-offset' data attribute to
+  // either a specific value with units or a percentage.
+  //
   // Note that we support adding yet-more lazy content onto the page after page
   // initialization, but only when using Replace.js.
   $(document).initializeEach('[data-lazy-url]', function() {
@@ -186,6 +189,11 @@
       if ($this.data('lazyHorizontal')) {
         waypointOptions.horizontal = true;
         waypointOptions.direction = 'right';
+      }
+
+      var offset = $this.data('lazyOffset');
+      if (offset) {
+        waypointOptions.offset = offset;
       }
 
       var dataContext = $this.data('lazyContext');
