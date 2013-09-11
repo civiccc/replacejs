@@ -1,3 +1,7 @@
+### 0.0.5
+
+* Allow replacement content to not start with a tag.
+
 ### 0.0.4
 
 * Add support for `data-lazy-offset` option

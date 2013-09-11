@@ -73,7 +73,11 @@
         if (options.success) {
           options.success($container, data);
         }
-        $(data).replaceAll($container).trigger('replace:done');
+        $('<div>')
+          .html(data)
+          .contents()
+          .replaceAll($container)
+          .trigger('replace:done');
       })
       .fail(function() {
         $container.trigger('replace:fail');
